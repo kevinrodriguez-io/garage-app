@@ -1,5 +1,5 @@
 import { Colors } from '@kevinrodriguez-io/pigment-core'
-import { Platform, TextStyle } from 'react-native'
+import { Platform, ShadowStyleIOS, TextStyle } from 'react-native'
 
 export type Theme = typeof lightTheme
 
@@ -8,32 +8,67 @@ const defaultFont: TextStyle = {
   ...Platform.select({
     web: {
       fontFamily: "'Poppins', sans-serif",
-      fontWeight: '400',
+      fontWeight: '500',
     },
     native: {
-      fontFamily: 'Poppins_400Regular', // Just in case we try to move to React-Native with Expo-Google-Fonts
+      fontFamily: 'Poppins_500Medium', // Just in case we try to move to React-Native with Expo-Google-Fonts
     },
   }),
 }
 
+const buttonFont: TextStyle = {
+  fontSize: 14,
+  ...Platform.select({
+    web: {
+      fontFamily: "'Poppins', sans-serif",
+      fontWeight: '500',
+    },
+    native: {
+      fontFamily: 'Poppins_500Medium',
+    },
+  }),
+}
+
+const defaultShadow: ShadowStyleIOS = {
+  shadowOpacity: 0.8,
+  shadowColor: '#000',
+  shadowRadius: 15,
+  shadowOffset: { width: 0, height: 0 },
+}
+
+const darkModeColor = Colors.flatPurple.dark
+const lightModeColor = Colors.flatYellow.light
+
 export const lightTheme = {
   colors: {
-    primary: Colors.flatBlue.light,
-    background: Colors.flatWhite.dark,
+    primary: '#8f8bda',
+    background: Colors.flatWhite.light,
     text: Colors.flatBlack.dark,
+    darkModeColor,
+    lightModeColor,
   },
   fonts: {
     default: defaultFont,
+    button: buttonFont,
+  },
+  shadows: {
+    default: defaultShadow,
   },
 }
 
 export const darkTheme: Theme = {
   colors: {
-    primary: Colors.flatNavyBlue.dark,
-    background: Colors.flatBlack.dark,
+    primary: '#232064',
+    background: '#171543',
     text: Colors.flatWhite.light,
+    darkModeColor,
+    lightModeColor,
   },
   fonts: {
     default: defaultFont,
+    button: buttonFont,
+  },
+  shadows: {
+    default: defaultShadow,
   },
 }

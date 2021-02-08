@@ -1,17 +1,29 @@
 import { FC } from 'react'
 import { ThemeProvider } from '@emotion/react'
-import { View, useColorScheme } from 'react-native'
+import { configureStore } from '@reduxjs/toolkit'
+import { Provider, useSelector } from 'react-redux'
 
 import { lightTheme, darkTheme } from 'theme'
-import { RegularText } from './Text'
+import rootReducer from 'reducers'
+import { Main } from 'views/Main'
 
-export const App: FC = () => {
-  const colorScheme = useColorScheme()
+const store = configureStore({
+  reducer: rootReducer,
+})
+
+const InnerApp: FC = () => {
+  const colorScheme = useSelector((s) => s.themeReducer.colorScheme)
   return (
     <ThemeProvider theme={colorScheme === 'dark' ? darkTheme : lightTheme}>
-      <View>
-        <RegularText>Aliqua nisi Lorem proident adipisicing nisi laborum duis.</RegularText>
-      </View>
+      <Main />
     </ThemeProvider>
+  )
+}
+
+export const App: FC = () => {
+  return (
+    <Provider store={store}>
+      <InnerApp />
+    </Provider>
   )
 }
